@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "PiDockerCore": {
+      "commandName": "Project",
+      "commandLineArgs": "",
+      "environmentVariables": {
+        "NETCORE_CONSOLE_ENVIRONMENT": "Development"
+      } 
+    }
+  }
+}
