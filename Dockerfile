@@ -3,7 +3,7 @@ ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
 RUN mkdir -p /root/src/app
 WORKDIR /root/src/app
-COPY pidockercore pidockercore
+COPY PiDockerCore pidockercore
 WORKDIR /root/src/app/pidockercore
 
 RUN dotnet restore ./pidockercore.csproj
