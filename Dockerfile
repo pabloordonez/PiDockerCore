@@ -1,19 +1,16 @@
-FROM microsoft/dotnet:2.0-runtime AS base
-WORKDIR /app
+FROM microsoft/dotnet:2.0-sdk as builder
+ENV DOTNET_CLI_TELEMETRY_OPTOUT 1
 
-FROM microsoft/dotnet:2.0-sdk AS build
-WORKDIR /src
-COPY PiDockerCore.sln ./
-COPY PiDockerCore/PiDockerCore.csproj PiDockerCore/
-RUN dotnet restore -nowarn:msb3202,nu1503
-COPY . .
-WORKDIR /src/PiDockerCore
-RUN dotnet build -c Release -o /app
+RUN mkdir -p /root/src/app
+WORKDIR /root/src/app
+COPY pidockercore pidockercore
+WORKDIR /root/src/app/pidockercore
 
-FROM build AS publish
-RUN dotnet publish -c release -o /app -r linux-arm
+RUN dotnet restore ./pidockercore.csproj
+RUN dotnet publish -c release -o published -r linux-arm
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "PiDockerCore.dll"]
+FROM microsoft/dotnet:2.0.0-runtime-stretch-arm32v7
+WORKDIR /root/
+COPY --from=builder /root/src/app/pidockercore/published .
+
+CMD ["dotnet", "./PiDockerCore.dll"]
