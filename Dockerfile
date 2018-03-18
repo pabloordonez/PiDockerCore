@@ -13,4 +13,4 @@ FROM microsoft/dotnet:2.0.0-runtime-stretch-arm32v7
 WORKDIR /root/
 COPY --from=builder /root/src/app/pidockercore/published .
 
-CMD ["dotnet", "./PiDockerCore.dll"]
+CMD ["dotnet", "PiDockerCore.dll"]
