@@ -6,7 +6,7 @@ WORKDIR /root/src/app
 COPY PiDockerCore pidockercore
 WORKDIR /root/src/app/pidockercore
 
-RUN dotnet restore ./pidockercore.csproj
+RUN dotnet restore ./PiDockerCore.csproj
 RUN dotnet publish -c release -o published -r linux-arm
 
 FROM microsoft/dotnet:2.0.0-runtime-stretch-arm32v7
